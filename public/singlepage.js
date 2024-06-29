@@ -220,7 +220,7 @@ async function register(event) {
     const password = document.getElementById('signinput2').value;
 
     try {
-        const response = await fetch('http://localhost:4000/api/reg', {
+        const response = await fetch('https://courses-portal-2bw0.onrender.com/api/reg', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -283,7 +283,7 @@ function Login() {
         const password = document.getElementById('loginput2').value;
 
         // Perform login operation
-        fetch('http://localhost:4000/api/login', {
+        fetch('https://courses-portal-2bw0.onrender.com/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
