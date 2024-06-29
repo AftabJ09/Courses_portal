@@ -13,7 +13,7 @@ mongoose.connect('mongodb+srv://aftab50100:DEpdzqG03xTiZO9f@coursedb1.lnjeep1.mo
     .then(() => {
         console.log("connected to database");
         app.listen(4000, () => {
-            console.log("server is running on port 6000");
+            console.log("server is running on port 4000");
         });
     })
     .catch((err) => {
