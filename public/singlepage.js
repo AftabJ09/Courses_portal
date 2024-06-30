@@ -496,7 +496,7 @@ async function submitBlog() {
 
     } else {
         alert('Error creating blog post');
-        alert(form[2]);
+        
     }
 }
 
