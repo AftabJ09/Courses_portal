@@ -346,7 +346,7 @@ function creater() {
         const code = document.getElementById('addinput3').value;
 
         // Perform login operation
-        fetch('http://localhost:4000/api/login', {
+        fetch('https://courses-portal-2bw0.onrender.com/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
