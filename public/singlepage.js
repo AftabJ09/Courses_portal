@@ -486,7 +486,7 @@ async function submitBlog() {
     const formData = new FormData(form);
     
     
-    const response = await fetch('http://localhost:4000/api/upload', {
+    const response = await fetch('https://courses-portal-2bw0.onrender.com/api/upload', {
         method: 'POST',
         body: formData
     });
