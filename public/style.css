@@ -99,7 +99,7 @@ nav{
 }
 
 
-#login{
+#login ,#loginforgot{
     margin: 30px 0px 0px 30px;
     position: relative;
     background: #fafafa;
@@ -144,7 +144,34 @@ nav{
     font-size: larger;
 
 }
-#signin2{
+#forgot{
+    color:rgb(247, 244, 244);
+    background-color: rgb(234, 28, 28);
+    border-radius: 5px;
+    padding:5px;
+    font-size: larger;
+
+}
+#otpbutton1{
+    color:rgb(247, 244, 244);
+    background-color: rgb(51, 211, 6);
+    border-radius: 5px;
+    padding:5px;
+    font-size: larger;
+    margin-top: 10px;
+
+}
+
+#update_passwordbtn{
+    color:rgb(247, 244, 244);
+    background-color: rgb(43, 6, 211);
+    border-radius: 5px;
+    padding:5px;
+    font-size: larger;
+    margin-top: 10px;
+
+}
+#signin2 ,#otpbutton{
     color:rgb(247, 244, 244);
     background-color: rgb(28, 28, 234);
     border-radius: 3px;
