@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skill Hub</title>
+    <title>Code-city</title>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+(function(){
+  emailjs.init({
+    publicKey: "igctA66kmOjnNbrr9",
+  });
+})();
+</script>
+    
 </head>
 <body>
     <h4>Welcome to our website</h4>
@@ -40,17 +51,48 @@
                 <input id="loginput2" name="password" type="password" placeholder="Password" required oninput="validatePassword()">
                 <span id="passwordError" style="color: red; display: none;">Password is required</span>
                 <button id="signin1" onclick="Login()">Login</button>
+                <br>
+                <button id="forgot">Forgot password</button>
             </div>
 
+            <div id="loginforgot">
+                <form id="updatePasswordForm">
+                    <h2>Email</h2>
+                    <input id="for_input1" name="email" type="text" placeholder="Email" oninput="validateEmail()" required>
+                    <span id="emailError" style="color: red; display: none;">Invalid email format</span>
+                    <br>
+                    <h2>Password</h2>
+                    <input id="for_input2" name="password" type="password" placeholder="Password" required oninput="validatePassword()">
+                    <span id="passwordError" style="color: red; display: none;">Password is required</span>
+                    <br>
+            
+                        <h2>Otp</h2>
+                        <input id="otp_value2" name="OTP" type="text" placeholder="otp"> 
+                        <button id="otpbutton1">Send otp </button>
+                        <br>
+                    <button id="update_passwordbtn">Update</button>
+                </form>
+            </div>
             <div id="account">
                 <h2>Registration page</h2><br>
+          
+                
+
                 <form id="accountform">  
                     <h2>Email</h2>
                     <input id="signinput1"  name="email" type="text" placeholder="Email">
-                    <br>
+                    
                     <h2>Password</h2>
                     <input id="signinput2" name="password" type="text" placeholder="password">
+                    <div id="otpblock">
+                        <br>
+                        <h2>Otp</h2>
+                        <input id="otp_value1" name="OTP" type="text" placeholder="otp"> 
+                        <button id="otpbutton">Send otp </button>
+
+                    </div>
                     <button id="signup" >Register</button>
+                    
                 </form>
             </div>
 
@@ -72,7 +114,7 @@
         </div>
 
             <div id="adminpage">
-        
+            
             <div id="adminlogin">
                 <h2>Admin Login Page</h2><br>
                 <h5>Note to login as admin you should have user account</h5><br>
@@ -87,6 +129,8 @@
                 <input id="addinput3" name="admin code" type="text" placeholder="admin code">
             
                 <button id="signin2">Login</button>
+                <br>
+               <h3>Please go to login page incase if you have forgotten the password</h3>
             </div>
 
             <div id="blog">
