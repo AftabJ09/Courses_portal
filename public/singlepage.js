@@ -1,5 +1,8 @@
 /* nav bar link options */
 
+var otp_val=0;
+var otp_val1=0;
+
 let homelink =document.getElementById("homelink");
 let aboutlink =document.getElementById("aboutlink");
 let contactlink =document.getElementById("contactlink");
@@ -28,6 +31,7 @@ var aboutus=document.getElementById("aboutus");
 var contactus=document.getElementById("contactus");
 var coursechoice=document.getElementById("coursechoice");
 var coursecontent=document.getElementById("course");
+var loginforget=document.getElementById("loginforgot");
 
 /*nav bar functions */
 
@@ -59,7 +63,7 @@ function gohome(){
     login.style.display="none";
     blog.style.display="none";
     backlink.style.display="none";
-
+    loginforget.style.display="none";
     homelink.style.display="block";
     adminlink.style.display="block";
     loginlink.style.display='block';
@@ -84,6 +88,7 @@ function goabout(){
     account.style.display="none";
     login.style.display="none";
     blog.style.display="none";
+    loginforget.style.display="none";
 
 
 }
@@ -113,7 +118,7 @@ function gosignup(){
     introduction.style.display="none";
     login.style.display="none";
     userpage.style.display="none";
-
+    loginforget.style.display="none";
     backlink.style.display="none";
     homelink.style.display="block";
     adminlink.style.display="block";
@@ -133,7 +138,7 @@ function gologin(){
     login.style.display="block";
     userpage.style.display="none";
     backlink.style.display="none";
-    
+    loginforget.style.display="none";
     homelink.style.display="block";
     adminlink.style.display="block";
     loginlink.style.display='none';
@@ -178,6 +183,7 @@ function adminlog(){
     homelink.style.display="none";
     loginlink.onclick = logout;
     backlink.style.display="none";
+    loginforget.style.display="block";
 }
 function userp(){
     homelink.style.display="none";
@@ -196,6 +202,7 @@ function userp(){
     adminlink.style.display="none";
     loginlink.onclick = logout;
     signuplink.style.display="none";
+    loginforget.style.display="none";
    
     
 
@@ -210,6 +217,30 @@ function logout() {
     
     window.location.reload();
 }
+function update_password(){
+    
+    mainframe1.style.display="none";
+    mainframe.style.display="block";
+    adminpage.style.display="none";
+    account.style.display="none";
+    introduction.style.display="none";
+    login.style.display="none";
+    userpage.style.display="none";
+    backlink.style.display="none";
+    loginforget.style.display="block";
+    homelink.style.display="block";
+    adminlink.style.display="block";
+    loginlink.style.display='none';
+    signuplink.style.display="block";
+    aboutlink.style.display="block";
+    contactlink.style.display="block";
+}
+
+
+
+document.getElementById('forgot').addEventListener('click',update_password);
+
+
 
 
 
@@ -218,7 +249,12 @@ async function register(event) {
     event.preventDefault();
     const email = document.getElementById('signinput1').value;
     const password = document.getElementById('signinput2').value;
+    const otp_in1=document.getElementById('otp_value1').value;
 
+
+
+
+ if(otp_in1==otp_val){
     try {
         const response = await fetch('https://courses-portal-2bw0.onrender.com/api/reg', {
             method: 'POST',
@@ -242,10 +278,133 @@ async function register(event) {
         alert('Error in making request. Please try again later.');
     }
 }
+else{
+    alert("The otp entered is wrong please check once!");
+}
+}
 
+
+
+
+function sendotp(event){
+    event.preventDefault();
+    
+    emailjs.init('igctA66kmOjnNbrr9'); 
+    console.log('EmailJS initialized');
+
+    const email = document.getElementById('signinput1').value;
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+    otp_val=otp;
+    const templateParams = {
+        email: email,
+        otp: otp
+        };
+        
+    console.log('Sending OTP to:', email);
+    console.log('OTP:', otp);
+    console.log('Template Params:', templateParams);
+
+    emailjs.send('service_3dugiza', 'template_0m61arl', templateParams)
+            .then(function(response) {
+                alert("OTP SENT SUCESSFULLY TO : "+email+" Thank you!");
+                
+            }, function(error) {
+                alert("Fail to send otp , cehk if the following email adress: "+email+" is correct or wrong");
+                console("Error")
+            });
+    }
+
+
+
+
+
+
+
+    async function sendotp1(event) {
+        event.preventDefault();
+    
+        const email = document.getElementById('for_input1').value;
+    
+        try {
+            // Check if email exists in the database
+            const checkResponse = await fetch(`https://courses-portal-2bw0.onrender.com/api/check-email/${email}`);
+            const checkData = await checkResponse.json();
+    
+            if (checkResponse.ok) {
+                if (!checkData.exists) {
+                    alert(`User with email ${email} not found`);
+                    return;
+                }
+    
+                // Email exists, proceed to send OTP
+                const otp1 = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+                otp_val1 = otp1;
+                const templateParams = {
+                    email: email,
+                    otp: otp1
+                };
+    
+                // Send OTP email using EmailJS
+                emailjs.init('igctA66kmOjnNbrr9'); // Initialize EmailJS with your service ID
+                console.log('EmailJS initialized');
+    
+                emailjs.send('service_3dugiza', 'template_0m61arl', templateParams)
+                    .then(function(response) {
+                        alert("OTP SENT SUCCESSFULLY TO : " + email + ". Thank you!");
+                    }, function(error) {
+                        alert("Failed to send OTP. Please check if the email address " + email + " is correct or try again later.");
+                        console.error("EmailJS Error:", error);
+                    });
+            } else {
+                alert('Error checking email existence');
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            alert('Error in making request. Please try again later.');
+        }
+    }
+    
+/*
+    function sendotp1(event){
+        event.preventDefault();
+       
+        emailjs.init('igctA66kmOjnNbrr9'); 
+        console.log('EmailJS initialized');
+    
+        const email = document.getElementById('for_input1').value;
+
+       
+        const otp1 = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+        otp_val1 = otp1;
+        const templateParams = {
+            email: email,
+            otp: otp1
+            };
+            
+        console.log('Sending OTP to:', email);
+        console.log('OTP:', otp1);
+        console.log('Template Params:', templateParams);
+    
+      
+
+
+
+
+
+        emailjs.send('service_3dugiza', 'template_0m61arl', templateParams)
+                .then(function(response) {
+                    alert("OTP SENT SUCESSFULLY TO : "+email+" Thank you!");
+                    
+                }, function(error) {
+                    alert("Fail to send otp , cehk if the following email adress: "+email+" is correct or wrong");
+                    console("Error")
+                });
+        }
+*/
 
 document.getElementById('signup').addEventListener('click', register);
-
+document.getElementById('otpbutton').addEventListener('click', sendotp);
+document.getElementById('otpbutton1').addEventListener('click', sendotp1);
 
 
 
@@ -375,8 +534,44 @@ function creater() {
 document.getElementById("signin2").addEventListener("click", creater);
 
 
+async function update_user_password(event) {
+    event.preventDefault();
+    alert("Button is on");
+
+    const email = document.getElementById('for_input1').value;
+    const newpassword = document.getElementById('for_input2').value;
+    const otp_in2 = document.getElementById('otp_value2').value;
+
+    if (otp_val1 == otp_in2) {
+        try {
+
+            // Email exists, proceed with password update
+            const response = await fetch('https://courses-portal-2bw0.onrender.com/api/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, newpassword })
+            });
+
+            if (response.ok) {
+                alert("Password changed successfully for: " + email);
+                location.reload();
+            } else {
+                const errorData = await response.json();
+                alert(errorData.error || 'Error in changing password');
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            alert('Error in making request. Please try again later.');
+        }
+    } else {
+        alert("OTP entered may be wrong. Please try again.");
+    }
+}
 
 
+document.getElementById("update_passwordbtn").addEventListener("click",update_user_password);
 
 
 
@@ -496,7 +691,7 @@ async function submitBlog() {
 
     } else {
         alert('Error creating blog post');
-        
+        alert(form[2]);
     }
 }
 
