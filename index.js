@@ -1,3 +1,4 @@
+
 const express = require('express');
 const multer = require('multer');
 const mongoose = require('mongoose');
@@ -7,13 +8,15 @@ const BlogPost = require('./models/BlogPost');
 const User = require('./models/User');
 const fs = require("fs");
 const app = express();
+const nodemailer=require('nodemailer');
+const cors =require('cors');
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://aftab50100:DEpdzqG03xTiZO9f@coursedb1.lnjeep1.mongodb.net/coursecollection?retryWrites=true&w=majority&appName=courseDb1')
     .then(() => {
         console.log("connected to database");
         app.listen(4000, () => {
-            console.log("server is running on port 4000");
+            console.log("server is running on port 6000");
         });
     })
     .catch((err) => {
@@ -37,7 +40,7 @@ app.use(express.static('public'));
 
 
 
-// Serve the HTML form
+
 app.get('/', (req, res) => {
     res.render(path.join(__dirname, 'public', 'index.html'));
 });
@@ -45,48 +48,7 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/*
 
-app.post('/api/upload', upload.fields([
-    { name: 'title' },
-    { name: 'text' },
-    {name:'vediourl'},
-    { name: 'image' },
-    { name: 'video' }
-]), async (req, res) => {
-    try {
-        const { title } = req.body;
-        const {text}  =req.body;
-        const {url} =req.body;
-        const components = [];
-
-        for (const [key, value] of Object.entries(req.files)) {
-            value.forEach(file => {
-                components.push({
-                    type: key,
-                    value: file.buffer
-                });
-            });
-        }
-
-        const blogPost = new BlogPost({
-            title,text,url,
-            content: components
-        });
-
-        await blogPost.save();
-        res.status(201).send('Blog post created successfully');
-        alert(url);
-    } catch (error) {
-        res.status(500).send('Error creating blog post');
-        alert(url);
-    }
-});
-
-*/
-
-
-// POST endpoint for user registration
 app.post('/api/reg', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -111,6 +73,25 @@ app.post('/api/reg', async (req, res) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 
+});
+
+app.put('/api/update',async(req,res)=>{
+    const {email,newpassword} = req.body;
+    try {
+        // Find the user by email
+        let user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        user.password = newpassword;
+        await user.save();
+
+        res.json({ message: 'Password updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
 });
 
 
@@ -209,4 +190,22 @@ app.get('/api/course/:title', async (req, res) => {
 
 
 
+
+app.get('/api/check-email/:email', async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Check if user exists by email
+        const user = await User.findOne({ email });
+
+        if (user) {
+            res.json({ exists: true });
+        } else {
+            res.json({ exists: false });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
