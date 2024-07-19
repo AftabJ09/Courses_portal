@@ -8,8 +8,7 @@ const BlogPost = require('./models/BlogPost');
 const User = require('./models/User');
 const fs = require("fs");
 const app = express();
-const nodemailer=require('nodemailer');
-const cors =require('cors');
+
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://aftab50100:DEpdzqG03xTiZO9f@coursedb1.lnjeep1.mongodb.net/coursecollection?retryWrites=true&w=majority&appName=courseDb1')
